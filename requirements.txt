@@ -7,4 +7,4 @@ transformers==4.31.0
 werkzeug==2.3.6
 
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torch==1.7.1+cpu
+torch==2.0.1+rocm5.4.2
