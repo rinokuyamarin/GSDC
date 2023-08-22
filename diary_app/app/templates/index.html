@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>日記アプリ - PositivAI -</title>
+</head>
+<body>
+    <header>
+        <h1 class="top-title"><i class="fas fa-book book-icon"></i>PositivAI</h1>
+        <div class="graph-button">
+            <a href="/graph">
+                <i class="fas fa-chart-line"></i>
+            </a>
+            <a href="/graph">
+                <p class="graph-text">グラフを見る</p>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="diary-form">
+            <h2>今日の日記</h2>
+            <form action="/submit_diary" method="post" enctype="multipart/form-data">
+                <textarea name="diary_content" rows="4" cols="50" placeholder="日記を記入してください"></textarea>
+                <label for="image">画像を添付</label>
+                <input type="file" name="image" accept="image/*">
+                <button type="submit">日記を投稿する</button>
+            </form>
+        </div>
+
+        <div class="yesterday-diary">
+            {% if yesterday_diary %}
+                <h3>昨日の投稿</h3>
+                <p>{{ yesterday_diary['content'] }}</p>
+                {% if yesterday_diary['image'] %}
+                    <img src="{{ url_for('static', filename='images/' + yesterday_diary['image']) }}" alt="昨日の投稿の画像">
+                {% endif %}
+            {% else %}
+                <p>昨日の投稿はありません。</p>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 日記アプリ</p>
+    </footer>
+</body>
+</html>

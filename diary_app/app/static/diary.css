@@ -1,0 +1,83 @@
+/* diary.css */
+
+/* ページ全体のスタイル */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ヘッダーのスタイル */
+header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  height: 100px;
+}
+
+header h1.title {
+  margin-top: 28px;
+  font-size: 40px;
+}
+
+/* フッターのスタイル */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* 日記詳細コンテンツのスタイル */
+.diary-details {
+  max-width: 800px;
+  margin: auto;
+}
+
+.diary-details h2 {
+  margin-bottom: 10px;
+}
+
+.diary-details p {
+  margin-bottom: 20px;
+}
+
+/* ヘッダーコンテンツのスタイル */
+.header-content {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 24px;
+  right: 60px;
+}
+
+/* ヘッダーボタンのスタイル */
+.header-content a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  padding-left: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-content i {
+  font-size: 48px;
+  margin-bottom: 5px; /* アイコンの下に余白を追加 */
+}
+
+.header-content span {
+  font-size: 18px; /* テキストのフォントサイズを調整 */
+}
+
+/* diary-details内の画像のスタイル */
+.diary-details img {
+  display: block;
+  margin: 20px auto; /* 画像を中央に配置するためのマージン設定 */
+  max-width: 40%; /* 画像の最大幅を親要素に合わせる */
+  height: auto;
+}

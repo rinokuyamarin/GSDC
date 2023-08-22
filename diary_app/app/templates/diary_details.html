@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='diary.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='diary-list.css') }}">
+    <title>日記詳細</title>
+</head>
+<body>
+    <header>
+        <h1 class="title">{{ diary['date'] }}</h1>
+        <div class="header-content">
+            <a href="/">
+                <i class="fas fa-home"></i>
+                <span>ホーム</span>
+            </a>
+            <a href="/graph">
+                <i class="fas fa-chart-line"></i>
+                <span>グラフを見る</span>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="diary-details">
+            <p>{{ diary['content'] }}</p>
+            <img src="{{ url_for('static', filename='images/' + image_filename) }}" alt="日記の画像">
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 日記アプリ</p>
+    </footer>
+</body>
+</html>

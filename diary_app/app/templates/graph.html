@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='diary-list.css') }}">
+    <!-- 他のメタ情報やスタイルの読み込みなど -->
+</head>
+</head>
+
+    <title>感情スコアグラフ</title>
+    <!-- グラフ描画のためのライブラリを読み込む（例: Chart.js） -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">感情スコアグラフ</h1>
+        <div class="home-icon">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+            <a href="/">
+                <p class="home-text">ホーム</p>
+            </a>
+          </div>
+    </header>
+    
+    <script>
+        // ボタンをクリックした際にホームページにリダイレクトする処理
+        var backButton = document.getElementById('back-home');
+        backButton.addEventListener('click', function() {
+            window.location.href = '/';
+        });
+    </script>
+    <main>
+        <div class="graph-container">
+            <canvas id="sentiment-graph" width="800" height="376"></canvas>
+        </div>
+    </main>
+    <div class="diary-list-container">
+        <div class="slide-buttons">
+            <button class="prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        </div>
+        <div class="slideshow-container">
+            {% set chunked_data = diary_data|batch(3) %}
+            {% for chunk in chunked_data %}
+            <div class="slideshow hidden">
+                {% for entry in chunk %}
+                    <div class="diary-entry box1">
+                        <h3>{{ entry.date }}</h3>
+                        <div class="entry-content">
+                            <p>{{ entry.content }}</p>
+                        </div>
+                        <a href="{{ url_for('diary_details', diary_id=loop.index0) }}">詳細を見る</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        
+        </div>
+        <div class="slide-buttons">
+            <button class="next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 日記アプリ</p>
+    </footer>
+
+    <script>
+        var currentSlide = 0; // 初期スライドを0に変更
+        var slides = document.getElementsByClassName("slideshow");
+        n=0
+        function changeSlide(step) {
+            n = n + 1
+            slides[currentSlide].classList.add("hidden");
+            currentSlide += step;
+            if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            } else if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            }
+            slides[currentSlide].classList.remove("hidden");
+        }
+    
+        // 最初のスライドを表示
+        slides[currentSlide].classList.remove("hidden");
+    
+        // グラフの描画処理を記述
+        var graphData = {
+            labels: [],
+            datasets: [{
+                label: '感情スコア',
+                data: [],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',  // グラフの色
+                borderColor: 'rgba(75, 192, 192, 1)',        // グラフの枠線の色
+                borderWidth: 1
+            }]
+        };
+        // diary_data を読み込み、graphData にデータを追加する
+        {% for entry in diary_data %}
+            graphData.labels.push('{{ entry.date }}');
+            graphData.datasets[0].data.push('{{ entry.score }}');
+        {% endfor %}
+    
+        // グラフ描画の処理
+        var ctx = document.getElementById('sentiment-graph').getContext('2d');
+        var sentimentGraph = new Chart(ctx, {
+            type: 'line',
+            data: graphData,
+        });
+    </script>
+    
+</body>
+</html>
